@@ -14,20 +14,28 @@ with open("original/ads.txt", "r") as data:
         newTitle = jsondata["title"].replace(",", "")
         newTitle = newTitle.replace("-", "")
         newTitle = newTitle.replace(".", "")
+        newTitle = newTitle.replace("\"", "")
+        newTitle = newTitle.replace("'", "")
         newTitle = re.sub("\s+", " ", newTitle).lower()
+
         newKeyWords = jsondata["keyWords"]
         for title in newTitle.split(" "):
             newKeyWords.append(title)
+
         newPrice = random.randint(1, 100000)
         newQuery = jsondata["query"].lower()
+        newBrand = jsondata["brand"].replace("'", "")
+        newCategory = jsondata["category"]
+        if newCategory == None:
+            newCategory = "None"
 
-        newAd["category"] = jsondata["category"]
+        newAd["category"] = newCategory
         newAd["query"] = newQuery
         newAd["campaignId"] = jsondata["campaignId"]
         newAd["title"] = newTitle
         newAd["price"] = newPrice
         newAd["relevanceScore"] = jsondata["relevanceScore"]
-        newAd["brand"] = jsondata["brand"]
+        newAd["brand"] = newBrand
         newAd["pClick"] = jsondata["pClick"]
         newAd["thumbnail"] = jsondata["thumbnail"]
         newAd["costPerClick"] = jsondata["costPerClick"]
@@ -45,7 +53,9 @@ with open("original/ads.txt", "r") as data:
 print(newData)
 
 with open("cleaned/cleanedAds.txt", "w") as newDataFile:
+    newData = newData.replace("'", "\"")
     newDataFile.write(newData)
     newDataFile.close()
+
 
 
