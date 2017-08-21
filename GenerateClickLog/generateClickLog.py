@@ -55,5 +55,8 @@ if __name__ == '__main__':
     #level 2: 30%  random  select 1 device_id click for 50% of query group
     #level 3: 40% never click
 
+    with open(userInputDir, "r") as users:
+        user = json.loads(users)
+
 
 
